@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_hospital_root"
+              name="Hospital"
+              sequence="0"
+              web_icon="hospital,static/description/icon.png"/>
+
+    <menuitem id="menu_hospital_patients"
+              name="Patients"
+              parent="menu_hospital_root"
+              sequence="10"/>
+
+    <menuitem id="menu_hospital_configuration"
+              name="Configuration"
+              parent="menu_hospital_root"
+              sequence="99"/>
+
+    <menuitem id="menu_hospital_patient_all"
+              name="All Patients"
+              parent="menu_hospital_patients"
+              action="action_hospital_patient"
+              sequence="10"/>
+    <menuitem id="menu_hospital_patient_draft"
+              name="Female Patients"
+              parent="menu_hospital_patients"
+              action="action_hospital_patient_Female"
+              sequence="20"/>
+
+
+</odoo>
