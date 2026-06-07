@@ -15,6 +15,7 @@
 
         'views/hospital_patient_views.xml',
         'views/hospital_menu.xml',
+        'views/hospital_appointment.xml',
     ],
 
     'images': ['static/description/icon.svg'],

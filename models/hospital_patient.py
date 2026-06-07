@@ -1,4 +1,4 @@
-
+from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api
 
@@ -21,7 +21,7 @@ class HospitalPatient(models.Model):
     appointment_date = fields.Datetime(string='Appointment Date')
     image = fields.Image(string='Patient Image')
     is_discharged = fields.Boolean(string='Discharged', default=False)
-
+    age=fields.Integer(string='Age',compute='_compute_age')
     active = fields.Boolean(string='Active', default=True)
 
     state = fields.Selection([
@@ -31,7 +31,21 @@ class HospitalPatient(models.Model):
         ('cancel', 'Cancelled'),
     ], string='Status', default='draft', tracking=True)
 
-
+    priority = fields.Selection([
+        ('0', 'Low'),
+        ('1', 'Medium'),
+        ('2', 'High'),
+        ('3', 'Very High')
+    ], default='0')
     _sql_constraints = [
         ('name_uniq', 'UNIQUE(name)', 'Patient name must be unique!'),
     ]
+
+    @api.depends('date_of_birth')
+    def _compute_age(self):
+        for rec in self:
+            if rec.date_of_birth:
+                today = fields.Date.today()
+                rec.age = relativedelta(today, rec.date_of_birth).years
+            else:
+                rec.age = 0
