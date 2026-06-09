@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api
+from odoo.orm.decorators import readonly
 
 
 class HospitalPatient(models.Model):
@@ -9,6 +10,7 @@ class HospitalPatient(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Patient Name', required=True)
+    ref=fields.Char(readonly=1,default='New')
     age = fields.Integer(string='Age')
     gender = fields.Selection([
         ('male', 'Male'),
@@ -41,6 +43,16 @@ class HospitalPatient(models.Model):
     _sql_constraints = [
         ('name_uniq', 'UNIQUE(name)', 'Patient name must be unique!'),
     ]
+
+
+    #add sequence _____________________________
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        if res.ref == "New":
+            res.ref = self.env['ir.sequence'].next_by_code('patient_seq')
+        return res
 
     @api.depends('date_of_birth')
     def _compute_age(self):

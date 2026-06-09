@@ -39,6 +39,7 @@
                     type="object"
                     string="Cancel"
                     class="btn-danger"
+                      invisible="state =='cancel'"
 
             />
 

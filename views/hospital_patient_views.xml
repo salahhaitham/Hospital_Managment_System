@@ -19,6 +19,7 @@
                          <button name="done_button" string="Done" type="object" class="btn_success" invisible="state != 'confirm'"/>
                         <button name="cancel_button" string="Cancel" type="object" class="btn_success" invisible="state == 'cancel  '"/>
                          <field name="state" widget="statusbar"/>
+
                     </header>
                      <field name="priority" widget="priority"/>
                     <field name="image"
@@ -33,6 +34,9 @@
                             <field name="name"
                                    placeholder="Patient Name..."
                                    required="1"/>
+                              <field name="ref"
+
+                               />
                         </h1>
                     </div>
                     <group>
