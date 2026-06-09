@@ -11,12 +11,15 @@
     'data': [
 
         'security/ir.model.access.csv',
-
-
-        'views/hospital_patient_views.xml',
+'data/hospital_tag.xml'  ,
+'wizards/cancel_appointment.xml',
         'views/hospital_menu.xml',
         'views/hospital_appointment.xml',
+        'views/hospital_patient_views.xml',
+
+
         'views/hospital_tag.xml',
+
     ],
 
     'images': ['static/description/icon.svg'],

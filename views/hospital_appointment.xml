@@ -35,11 +35,19 @@
                     string="Done"
                     class="btn-success"
                    invisible="state != 'confirmed'"/>
-
-            <button name="action_cancel"
+              <button name="action_cancel"
                     type="object"
                     string="Cancel"
-                    class="btn-danger"/>
+                    class="btn-danger"
+
+            />
+
+<!--            <button name="%(hospital.cancel_appointment_wizard_action)d"-->
+<!--                    type="action"-->
+<!--                    string="Cancel"-->
+<!--                    class="btn-danger"-->
+<!--            context="{'default_appointment_id': id}"-->
+<!--            />-->
 
             <field name="state" widget="statusbar"/>
           </header>
@@ -50,6 +58,7 @@
               <field name="patient_id"/>
               <field name="appointment_date"/>
               <field name="doctor_id"/>
+            
               <field name="is_paid" widget="boolean_toggle"/>
             </group>
 
@@ -78,6 +87,8 @@
       </field>
     </record>
 
+    
+
     <!-- ACTION -->
     <record id="action_hospital_appointment" model="ir.actions.act_window">
       <field name="name">Appointments</field>
@@ -86,10 +97,7 @@
     </record>
 
     <!-- MENU -->
-    <menuitem id="appointment_menu"
-              name="Appointments"
-              parent="menu_hospital_root"
-              action="action_hospital_appointment"/>
+
 
   </data>
 </odoo>

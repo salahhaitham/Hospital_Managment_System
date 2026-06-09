@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class HospitalAppointment(models.Model):
     _name = 'hospital.appointment'
     _description = 'Hospital Appointment'
-    _rec_name = 'patient_id'
+    _rec_name = 'name'
 
     name = fields.Char(string="Appointment Reference", required=True, default="New")
 
@@ -30,8 +30,18 @@ class HospitalAppointment(models.Model):
             rec.state = 'done'
 
     def action_cancel(self):
-        for rec in self:
-            rec.state = 'cancel'
+        self.ensure_one()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Cancel Appointment',
+            'res_model': 'cancel.appointment.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_appointment_id': self.id,
+            }
+        }
 
 
 class Appointment_phamacy_line(models.Model):

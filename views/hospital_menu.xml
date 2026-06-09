@@ -21,10 +21,25 @@
               parent="menu_hospital_patients"
               action="action_hospital_patient"
               sequence="10"/>
-    <menuitem id="menu_hospital_patient_draft"
+    <menuitem id="menu_hospital_female_patients"
               name="Female Patients"
               parent="menu_hospital_patients"
               action="action_hospital_patient_Female"
+              sequence="20"/>
+      <menuitem id="appointment_menu"
+              name="Appointments"
+              parent="menu_hospital_root"
+              />
+    <menuitem id="appointments"
+              name="Appointments"
+              parent="appointment_menu"
+              action="action_hospital_appointment"/>
+
+
+     <menuitem id="menu_hospital_Cancelation"
+              name="Cancelation"
+              parent="appointment_menu"
+              action="cancel_appointment_wizard_action"
               sequence="20"/>
 
 
