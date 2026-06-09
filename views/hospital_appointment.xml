@@ -49,12 +49,29 @@
               <field name="name"/>
               <field name="patient_id"/>
               <field name="appointment_date"/>
+              <field name="doctor_id"/>
+              <field name="is_paid" widget="boolean_toggle"/>
             </group>
 
             <group>
               <field name="notes"/>
             </group>
+               <notebook>
+            <page string="pharmacy">
+              <field name="appointment_phamacy_line_ids" >
+                <list editable="bottom">
+
+                  <field name="product_id"/>
+                <field name="qty"/>
+                <field name="price" column_invisible="parent.doctor_id == False "/>
+                </list>
+
+              </field>
+
+            </page>
+          </notebook>
           </sheet>
+
 
         </form>
 

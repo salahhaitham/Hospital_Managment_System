@@ -10,11 +10,23 @@
 
 
                 <sheet>
+
+
+                    <header>
+
+                         <button name="draft_button" string="Draft" type="object" class="btn_primary" invisible="state in ('draft','closed')"/>
+                         <button name="confirm_button" string="Confirmed" type="object" class="btn_secondary" invisible="state != 'draft'"/>
+                         <button name="done_button" string="Done" type="object" class="btn_success" invisible="state != 'confirm'"/>
+                        <button name="cancel_button" string="Cancel" type="object" class="btn_success" invisible="state == 'cancel  '"/>
+                         <field name="state" widget="statusbar"/>
+                    </header>
                      <field name="priority" widget="priority"/>
                     <field name="image"
                            widget="image"
                            class="oe_avatar"
                            options="{'preview_image': 'image'}"/>
+
+
                     <div class="oe_title">
 
                         <h1>
@@ -29,10 +41,13 @@
                             <field name="gender"/>
                             <field name="date_of_birth"/>
                             <field name="is_discharged"/>
+                             <field name="doctor_id" widget="many2one_avatar_user"/>
                         </group>
                         <group string="Appointment Info">
                             <field name="responsible_id"/>
                             <field name="appointment_date"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+
                         </group>
                     </group>
                     <notebook>
@@ -50,15 +65,23 @@
         <field name="name">hospital.patient.tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <list string="Patients"
+            <list string="Patients" multi_edit="1"
+                  decoration-success="state == 'done'"
+                  decoration-info="state  in ('draft','confirm')"
+                  decoration-danger="state == 'cancel'"
                >
                 <field name="name"/>
                 <field name="age"/>
                 <field name="gender"/>
                 <field name="date_of_birth"/>
+               <field name="doctor_id" widget="many2one_avatar"/>
                 <field name="responsible_id"/>
                 <field name="appointment_date"/>
-                <field name="state"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-info="state  in ('draft','confirm')"
+                        decoration-danger="state == 'cancel'"
+
+                />
 
                 <field name="active" invisible="1"/>
             </list>

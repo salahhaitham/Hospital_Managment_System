@@ -14,7 +14,7 @@
     <menuitem id="menu_hospital_configuration"
               name="Configuration"
               parent="menu_hospital_root"
-              sequence="99"/>
+              />
 
     <menuitem id="menu_hospital_patient_all"
               name="All Patients"
@@ -26,6 +26,8 @@
               parent="menu_hospital_patients"
               action="action_hospital_patient_Female"
               sequence="20"/>
+
+
 
 
 </odoo>
