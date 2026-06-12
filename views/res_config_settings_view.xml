@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+ <record id="res_config_settings_view_form_hospital" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.hospital</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//form" position="inside">
+            <app string="Hospital" name="hospital">
+                <block title="Hospital Settings">
+                    <setting string="Enable Patient Approval">
+                        <field name="enable_patient_approval"/>
+                    </setting>
+                    <setting string="Default Consultation Fee">
+                          <field name="consultation_fee"/>
+                    </setting>
+                </block>
+            </app>
+        </xpath>
+    </field>
+</record>
+       <record id="hospital_settings_id" model="ir.actions.act_window">
+        <field name="name">Hospital settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module':'hospital'}</field>
+    </record>
+
+    <menuitem id="hospital_settings_menu_id" parent="menu_hospital_configuration" action="hospital_settings_id"/>
+</odoo>

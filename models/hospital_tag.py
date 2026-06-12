@@ -8,3 +8,4 @@ class HospitalTag(models.Model):
     name = fields.Char(string='Tag Name', required=True)
     color = fields.Integer(string='Color')
     active = fields.Boolean(default=True)
+

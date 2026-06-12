@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 from odoo.orm.decorators import readonly
 
 
@@ -11,16 +12,25 @@ class HospitalPatient(models.Model):
 
     name = fields.Char(string='Patient Name', required=True)
     ref=fields.Char(readonly=1,default='New')
-    age = fields.Integer(string='Age')
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
         ('other', 'Other'),
     ], string='Gender', default='male')
+    parent=fields.Char(string='Parent Patient')
+
+    marital_status = fields.Selection([('married','Married'),('single','Single')], string='Marital Status')
+
+    partner_name=fields.Char(string='Partner Name')
+
     note = fields.Text(string='Notes')
+
     date_of_birth = fields.Date(string='Date of Birth')
+
     doctor_id=fields.Many2one('res.users','Doctor')
+
     responsible_id = fields.Many2one('res.partner', string='Responsible Person')
+
     appointment_date = fields.Datetime(string='Appointment Date')
     image = fields.Image(string='Patient Image')
     is_discharged = fields.Boolean(string='Discharged', default=False)
@@ -33,23 +43,31 @@ class HospitalPatient(models.Model):
         ('done', 'Done'),
         ('cancel', 'Cancelled'),
     ], string='Status', default='draft', tracking=True)
-
+    appointment_ids=fields.One2many('hospital.appointment', 'patient_id', string='Appointments')
+    patient_count = fields.Integer(string="Patient Count", compute="_compute_patient_count")
     priority = fields.Selection([
         ('0', 'Low'),
         ('1', 'Medium'),
         ('2', 'High'),
         ('3', 'Very High')
     ], default='0')
-    _sql_constraints = [
-        ('name_uniq', 'UNIQUE(name)', 'Patient name must be unique!'),
-    ]
 
+    @api.constrains('date_of_birth')
+    def _check_date_of_birth(self):
+        if self.date_of_birth and self.date_of_birth > fields.Date.today():
+            raise ValidationError('Date of Birth cannot be greater than today')
+    #patient count
 
+    @api.depends('appointment_ids')
+    def _compute_patient_count(self):
+        for rec in self:
+            rec.patient_count=self.env['hospital.appointment'].search_count([('patient_id','=',rec.id)])
     #add sequence _____________________________
 
     @api.model
     def create(self, vals):
         res = super().create(vals)
+        self.env['hospital.tag'].search([('name', '=', 'VIP')]).unlink()
         if res.ref == "New":
             res.ref = self.env['ir.sequence'].next_by_code('patient_seq')
         return res
@@ -78,6 +96,9 @@ class HospitalPatient(models.Model):
     def cancel_button(self):
         for rec in self:
             rec.state = 'cancel'
+
+    def click_test(self):
+        print("click")
 
 
 

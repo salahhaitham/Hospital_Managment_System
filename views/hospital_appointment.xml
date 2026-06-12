@@ -8,13 +8,39 @@
 
         <list string="Appointments">
           <field name="name"/>
+          <field name="activity_ids" widget="list_activity"/>
           <field name="patient_id"/>
           <field name="appointment_date"/>
-          <field name="state" widget="badge"/>
+          <field name="state" widget="badge"
+                 decoration-success="state == 'done'"
+                  decoration-info="state  in ('draft','confirm')"
+                  decoration-danger="state == 'cancel'">
+
+
+          </field>
+          <groupby name="patient_id">
+            <button name="click_test" type="object" string="Click" class="oe_highlight" />
+          </groupby>
+          <button name="action_confirm"
+                    type="object"
+                      icon="fa-check"
+                    class="btn-primary"
+                             invisible="state != 'draft'"/>
+           <button name="action_cancel"
+                    type="object"
+                             icon="fa-times"
+                    class="btn-primary"
+                             invisible="state != 'draft'"/>
         </list>
 
       </field>
     </record>
+
+
+
+
+
+
     <!-- FORM VIEW -->
     <record id="view_hospital_appointment_form" model="ir.ui.view">
       <field name="name">hospital.appointment.form</field>
@@ -26,7 +52,7 @@
           <header>
             <button name="action_confirm"
                     type="object"
-                    string="Confirm"
+                    string="in_consultation"
                     class="btn-primary"
                              invisible="state != 'draft'"/>
 
@@ -34,12 +60,13 @@
                     type="object"
                     string="Done"
                     class="btn-success"
-                   invisible="state != 'confirmed'"/>
+                   invisible="state != 'in_consultation'"/>
               <button name="action_cancel"
                     type="object"
                     string="Cancel"
                     class="btn-danger"
                       invisible="state =='cancel'"
+
 
             />
 
@@ -47,7 +74,7 @@
 <!--                    type="action"-->
 <!--                    string="Cancel"-->
 <!--                    class="btn-danger"-->
-<!--            context="{'default_appointment_id': id}"-->
+<!--           -->
 <!--            />-->
 
             <field name="state" widget="statusbar"/>
@@ -56,6 +83,8 @@
           <sheet>
             <group>
               <field name="name"/>
+                <field name="age2"/>
+
               <field name="patient_id"/>
               <field name="appointment_date"/>
               <field name="doctor_id"/>
@@ -82,7 +111,7 @@
           </notebook>
           </sheet>
 
-
+       <chatter/>
         </form>
 
       </field>

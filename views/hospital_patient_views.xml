@@ -42,7 +42,8 @@
                     <group>
                         <group string="Personal Info">
                             <field name="age"/>
-                            <field name="gender"/>
+                            <field name="patient_count"/>
+                            <field name="gender" invisible="context.get('hide_gender')"/>
                             <field name="date_of_birth"/>
                             <field name="is_discharged"/>
                              <field name="doctor_id" widget="many2one_avatar_user"/>
@@ -53,6 +54,15 @@
                             <field name="tag_ids" widget="many2many_tags"/>
 
                         </group>
+                    </group>
+
+                       <group>
+                        <group string="Additional Info">
+                            <field name="parent" invisible="age > 18 and patient_count > 3 "/>
+                            <field name="marital_status"/>
+                            <field name="partner_name" readonly="marital_status != 'married'"/>
+                        </group>
+
                     </group>
                     <notebook>
                         <page string="Notes">
@@ -131,7 +141,7 @@
         <field name="res_model">hospital.patient</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[('gender', '=', 'female')]</field>
-        <field name="context">{'default_gender': 'female'}</field>
+        <field name="context">{'default_gender': 'female','hide_gender':1}</field>
     </record>
 
 

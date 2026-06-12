@@ -6,7 +6,7 @@
     'description': 'Complete Hospital Management Module for Odoo 15',
     'author': 'Odoo Mates',
     'website': 'https://www.odoomates.tech',
-    'depends': ['base','mail','product'],
+    'depends': ['base','mail','product','base_setup'],
 
     'data': [
 
@@ -17,6 +17,7 @@
         'views/hospital_menu.xml',
         'views/hospital_appointment.xml',
         'views/hospital_patient_views.xml',
+   'views/res_config_settings_view.xml',
 
 
         'views/hospital_tag.xml',
