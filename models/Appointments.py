@@ -12,8 +12,8 @@ class HospitalAppointment(models.Model):
     _rec_name = 'name'
 
     name= fields.Char(string="Appointment Reference", required=True, default="New",readonly= True)
-    age2=fields.Integer(string="Age")
-    age22 = fields.Integer(string="Age")
+
+
     patient_id = fields.Many2one('hospital.patient', string="Patient", required=True,ondelete='restrict')
     doctor_id = fields.Many2one('res.partner', string="Doctor")
     appointment_date = fields.Datetime(string="Appointment Date", required=True)

@@ -34,7 +34,7 @@ class HospitalPatient(models.Model):
     appointment_date = fields.Datetime(string='Appointment Date')
     image = fields.Image(string='Patient Image')
     is_discharged = fields.Boolean(string='Discharged', default=False)
-    age=fields.Integer(string='Age',compute='_compute_age')
+    age=fields.Integer(string='Age',compute='_compute_age',inverse='_inverse_age')
     active = fields.Boolean(string='Active', default=True)
     tag_ids=fields.Many2many('hospital.tag')
     state = fields.Selection([
@@ -56,8 +56,9 @@ class HospitalPatient(models.Model):
     def _check_date_of_birth(self):
         if self.date_of_birth and self.date_of_birth > fields.Date.today():
             raise ValidationError('Date of Birth cannot be greater than today')
-    #patient count
 
+
+    # compute patient count______________________
     @api.depends('appointment_ids')
     def _compute_patient_count(self):
         for rec in self:
@@ -71,7 +72,7 @@ class HospitalPatient(models.Model):
         if res.ref == "New":
             res.ref = self.env['ir.sequence'].next_by_code('patient_seq')
         return res
-
+    # compute age _______________________________
     @api.depends('date_of_birth')
     def _compute_age(self):
         for rec in self:
@@ -80,6 +81,12 @@ class HospitalPatient(models.Model):
                 rec.age = relativedelta(today, rec.date_of_birth).years
             else:
                 rec.age = 0
+
+    def _inverse_age(self):
+        for rec in self:
+            if rec.age:
+                rec.date_of_birth = fields.Date.today() - relativedelta(years=rec.age)
+
 
     def confirm_button(self):
         for rec in self:

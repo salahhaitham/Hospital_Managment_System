@@ -83,7 +83,7 @@
           <sheet>
             <group>
               <field name="name"/>
-                <field name="age2"/>
+
 
               <field name="patient_id"/>
               <field name="appointment_date"/>

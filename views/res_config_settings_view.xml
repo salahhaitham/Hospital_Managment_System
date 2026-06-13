@@ -10,18 +10,17 @@
         <xpath expr="//form" position="inside">
             <app string="Hospital" name="hospital">
                 <block title="Hospital Settings">
-                    <setting string="Enable Patient Approval">
-                        <field name="enable_patient_approval"/>
+
+                    <setting string="Cancel Day">
+                          <field name="cancel_day"/>
                     </setting>
-                    <setting string="Default Consultation Fee">
-                          <field name="consultation_fee"/>
-                    </setting>
+
                 </block>
             </app>
         </xpath>
     </field>
 </record>
-       <record id="hospital_settings_id" model="ir.actions.act_window">
+    <record id="hospital_settings_id" model="ir.actions.act_window">
         <field name="name">Hospital settings</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.config.settings</field>

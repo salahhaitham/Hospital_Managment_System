@@ -10,7 +10,7 @@
                 <group>
 
 
-
+                    
                         <field name="reason" required="1"/>
                     <field name="appointment_id" required="1"/>
 
